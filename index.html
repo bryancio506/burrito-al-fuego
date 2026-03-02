@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Burrito al Fuego</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #f5f0e6;
+      color: #1c1c1c;
+      display: flex;
+      justify-content: center;
+      padding: 24px;
+    }
+    .card {
+      max-width: 480px;
+      width: 100%;
+      background: #fdf7ea;
+      border-radius: 16px;
+      padding: 24px 20px 28px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+      border: 1px solid #e0d0b5;
+    }
+    .logo {
+      display: block;
+      max-width: 260px;
+      width: 100%;
+      margin: 0 auto 12px;
+    }
+    h1 {
+      text-align: center;
+      font-size: 1.4rem;
+      margin: 4px 0 8px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+    .tagline {
+      text-align: center;
+      font-size: 0.95rem;
+      color: #555;
+      margin-bottom: 16px;
+    }
+    .pill {
+      display: inline-block;
+      background: #c41e3a;
+      color: #fff;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin: 0 auto 10px;
+    }
+    .section-title {
+      font-size: 1rem;
+      font-weight: 700;
+      margin: 18px 0 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    ul {
+      padding-left: 18px;
+      margin: 6px 0 0;
+      font-size: 0.95rem;
+    }
+    li + li {
+      margin-top: 4px;
+    }
+    .price {
+      font-weight: 700;
+      color: #c41e3a;
+    }
+    .cta {
+      margin-top: 22px;
+      text-align: center;
+    }
+    .cta a {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #25d366;
+      color: #fff;
+      text-decoration: none;
+      padding: 12px 22px;
+      border-radius: 999px;
+      font-size: 1rem;
+      font-weight: 600;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.18);
+    }
+    .cta a:hover {
+      background: #1fb257;
+    }
+    .cta small {
+      display: block;
+      margin-top: 6px;
+      font-size: 0.8rem;
+      color: #444;
+    }
+    .wa-icon {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: #fff;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #25d366;
+      font-weight: 900;
+      font-size: 14px;
+    }
+    .footer {
+      margin-top: 18px;
+      text-align: center;
+      font-size: 0.8rem;
+      color: #666;
+    }
+  </style>
+</head>
+<body>
+  <main class="card">
+    <img src="../images/burrito-al-fuego-01.png" alt="Burrito al Fuego" class="logo" />
+    <div class="pill">Hecho a la orden</div>
+    <h1>Burrito al Fuego</h1>
+    <p class="tagline">
+      Burritos bien rellenos, con sabor casero y toque parrillero en <strong>Costa Rica</strong>.
+    </p>
+
+    <h2 class="section-title">Menú</h2>
+    <ul>
+      <li><strong>Burrito de carne tradicional</strong> — tortilla de trigo, carne molida, frijoles, arroz, queso y salsa especial. <span class="price">₡2.000 – ₡3.000</span></li>
+      <li><strong>Burrito de pinto</strong> — gallo pinto, queso, huevo opcional y salsa Lizano. <span class="price">₡2.000 – ₡3.000</span></li>
+    </ul>
+
+    <h2 class="section-title">Pedidos</h2>
+    <ul>
+      <li>Zona: definí aquí tu barrio / zona de entrega.</li>
+      <li>Horarios: por ejemplo, <strong>medio día y noche</strong>, de lunes a sábado.</li>
+    </ul>
+
+    <div class="cta">
+      <a href="https://wa.me/50662712940?text=Hola%20Burrito%20al%20Fuego,%20quiero%20hacer%20un%20pedido" target="_blank" rel="noopener">
+        <span class="wa-icon">W</span>
+        <span>Pedir por WhatsApp</span>
+      </a>
+      <small>WhatsApp: +506 6271 2940</small>
+    </div>
+
+    <div class="footer">
+      Mismo sabor en cada burrito gracias a receta y medidas controladas.
+    </div>
+  </main>
+</body>
+</html>
