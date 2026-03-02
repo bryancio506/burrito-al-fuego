@@ -116,11 +116,92 @@
       font-size: 0.8rem;
       color: #666;
     }
+    .pesan-section {
+      margin-top: 20px;
+      text-align: center;
+    }
+    .carousel {
+      position: relative;
+      max-width: 270px;
+      margin: 0 auto;
+      overflow: hidden;
+      border-radius: 10px;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.12);
+    }
+    .carousel-track {
+      display: flex;
+      transition: transform 0.35s ease-out;
+    }
+    .carousel-slide {
+      flex: 0 0 100%;
+      width: 100%;
+      aspect-ratio: 1;
+      overflow: hidden;
+    }
+    .carousel-slide img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      vertical-align: top;
+    }
+    .carousel-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 28px;
+      height: 28px;
+      font-size: 1rem;
+      border: none;
+      border-radius: 50%;
+      background: rgba(0,0,0,0.5);
+      color: #fff;
+      font-size: 1.2rem;
+      cursor: pointer;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 1;
+      padding: 0;
+    }
+    .carousel-btn:hover {
+      background: rgba(196, 30, 58, 0.9);
+    }
+    .carousel-btn.prev { left: 6px; }
+    .carousel-btn.next { right: 6px; }
+    .carousel-dots {
+      display: flex;
+      justify-content: center;
+      gap: 6px;
+      margin-top: 8px;
+    }
+    .carousel-dots button {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      border: none;
+      background: #ccc;
+      cursor: pointer;
+      padding: 0;
+    }
+    .carousel-dots button.active {
+      background: #c41e3a;
+      transform: scale(1.2);
+    }
+    .pesan-frase {
+      margin: 14px 0 0;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #c41e3a;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
   </style>
 </head>
 <body>
   <main class="card">
-    <img src="images/burrito-al-fuego-01.png" alt="Burrito al Fuego" class="logo" />
+    <img src="images/burrito-al-fuego.png" alt="Burrito al Fuego" class="logo" />
     <center><div class="pill">Hecho a la orden</div></center>
     <center><h1>Burrito al Fuego</h1></center>
     <p class="tagline">
@@ -151,10 +232,67 @@
       Mismo sabor en cada burrito gracias a receta y medidas controladas. 
       <br>Burritos <strong>que pesan entre 270g a 300g!</strong>
     </div>
+
+    <div class="pesan-section">
+      <div class="carousel" id="carousel" role="region" aria-label="Fotos de burritos">
+        <button type="button" class="carousel-btn prev" aria-label="Anterior" onclick="carouselPrev()">‹</button>
+        <button type="button" class="carousel-btn next" aria-label="Siguiente" onclick="carouselNext()">›</button>
+        <div class="carousel-track" id="carouselTrack">
+          <div class="carousel-slide">
+            <img src="foto-burrito-00.jpeg" alt="Burrito al Fuego" />
+          </div>
+          <div class="carousel-slide">
+            <img src="foto-burrito-01.jpeg" alt="Burrito pesado en báscula" />
+          </div>
+          <div class="carousel-slide">
+            <img src="foto-burrito-02.jpeg" alt="Burrito pesado en báscula" />
+          </div>
+          <div class="carousel-slide">
+            <img src="foto-burrito-03.jpeg" alt="Burrito pesado en báscula" />
+          </div>
+        </div>
+      </div>
+      <div class="carousel-dots" id="carouselDots"></div>
+      <p class="pesan-frase">¡Burritos que pesan!!!</p>
+    </div>
+
     <br>
     <center><img src="images/qr.png" alt="Burrito al Fuego" class="" /></center>
     <br>
     <!-- <center><small>Scan para pedir por WhatsApp</small></center> -->
   </main>
+  <script>
+    (function() {
+      var track = document.getElementById('carouselTrack');
+      var dotsContainer = document.getElementById('carouselDots');
+      var slides = track.querySelectorAll('.carousel-slide');
+      var total = slides.length;
+      var index = 0;
+
+      function update() {
+        track.style.transform = 'translateX(-' + (index * 100) + '%)';
+        dotsContainer.querySelectorAll('button').forEach(function(btn, i) {
+          btn.classList.toggle('active', i === index);
+        });
+      }
+
+      window.carouselPrev = function() {
+        index = (index - 1 + total) % total;
+        update();
+      };
+      window.carouselNext = function() {
+        index = (index + 1) % total;
+        update();
+      };
+
+      slides.forEach(function(_, i) {
+        var btn = document.createElement('button');
+        btn.setAttribute('aria-label', 'Ir a foto ' + (i + 1));
+        btn.addEventListener('click', function() { index = i; update(); });
+        dotsContainer.appendChild(btn);
+      });
+      update();
+    })();
+  </script>
 </body>
 </html>
