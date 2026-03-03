@@ -280,15 +280,27 @@
     (function() {
       var track = document.getElementById('carouselTrack');
       var dotsContainer = document.getElementById('carouselDots');
+      var carouselEl = document.getElementById('carousel');
       var slides = track.querySelectorAll('.carousel-slide');
       var total = slides.length;
       var index = 0;
+      var autoInterval;
 
       function update() {
         track.style.transform = 'translateX(-' + (index * 100) + '%)';
         dotsContainer.querySelectorAll('button').forEach(function(btn, i) {
           btn.classList.toggle('active', i === index);
         });
+      }
+
+      function startAuto() {
+        autoInterval = setInterval(function() {
+          index = (index + 1) % total;
+          update();
+        }, 2500);
+      }
+      function stopAuto() {
+        clearInterval(autoInterval);
       }
 
       window.carouselPrev = function() {
@@ -307,6 +319,12 @@
         dotsContainer.appendChild(btn);
       });
       update();
+      startAuto();
+
+      if (carouselEl) {
+        carouselEl.addEventListener('mouseenter', stopAuto);
+        carouselEl.addEventListener('mouseleave', startAuto);
+      }
     })();
   </script>
 </body>
