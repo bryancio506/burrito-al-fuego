@@ -212,6 +212,19 @@
       text-transform: uppercase;
       letter-spacing: 0.04em;
     }
+    .qr-section {
+      margin-top: 12px;
+      text-align: center;
+    }
+    .qr-code {
+      display: block;
+      width: 100%;
+      max-width: 260px;
+      height: auto;
+      margin: 0 auto;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
   </style>
 </head>
 <body>
@@ -277,9 +290,16 @@
       <p class="pesan-frase">¡Burritos que pesan!!!🌯🔥</p>
     </div>
 
-    <br>
-    <center><img src="images/qr.png" alt="Burrito al Fuego" class="" /></center>
-    <br>
+    <div class="qr-section">
+      <img
+        src="images/qr.png"
+        alt="Código QR: página Burrito al Fuego"
+        class="qr-code"
+        width="260"
+        height="260"
+        decoding="async"
+      />
+    </div>
     <!-- <center><small>Scan para pedir por WhatsApp</small></center> -->
   </main>
   <script>
