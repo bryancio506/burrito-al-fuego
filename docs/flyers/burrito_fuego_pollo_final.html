@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Burrito al Fuego – Promo Pollo</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Oswald:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  /*
+   * ──────────────────────────────────────────────
+   *  INSTRUCCIONES PARA CAPTURAR COMO ESTADO
+   * ──────────────────────────────────────────────
+   *  1. Abrí este archivo en Chrome/Edge
+   *  2. Abrí DevTools (F12) → toggle device toolbar (Ctrl+Shift+M)
+   *  3. Poné resolución 1080 × 1920 (o 1080 × 1080 para cuadrado)
+   *  4. Click derecho sobre el flyer → "Capturar nodo como PNG"
+   *     (o usá una extensión de screenshot de página completa)
+   *  5. Subí esa imagen como estado de WhatsApp
+   * ──────────────────────────────────────────────
+   */
+
+  html, body {
+    height: 100%;
+    background: #1a0900;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 0;
+    font-family: 'Oswald', sans-serif;
+  }
+
+  /* El flyer tiene ancho fijo y se adapta alto */
+  .flyer {
+    width: 100%;
+    max-width: 480px;
+    min-height: 100vh;
+    background: #f5f0e6;
+    border-left: 3px solid #c41e3a;
+    border-right: 3px solid #c41e3a;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Textura de fondo */
+  .flyer::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: repeating-linear-gradient(
+      45deg,
+      transparent, transparent 3px,
+      rgba(0,0,0,0.018) 3px, rgba(0,0,0,0.018) 6px
+    );
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .c { position: relative; z-index: 1; display: flex; flex-direction: column; flex: 1; }
+
+  /* ── TOP BAR ── */
+  .top-bar {
+    background: #c41e3a;
+    padding: 10px 18px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-shrink: 0;
+  }
+  .top-bar-logo {
+    width: 34px;
+    height: 34px;
+    object-fit: cover;
+    border-radius: 5px;
+    border: 1.5px solid rgba(255,255,255,0.25);
+  }
+  .top-bar-txt {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 15px;
+    color: rgba(255,255,255,0.92);
+    letter-spacing: 5px;
+  }
+  .top-bar-emoji { font-size: 20px; }
+
+  /* ── HEADER ── */
+  .header {
+    padding: 20px 28px 16px;
+    text-align: center;
+    border-bottom: 2px solid rgba(196,30,58,0.18);
+    flex-shrink: 0;
+  }
+  .brand-emoji {
+    font-size: 40px;
+    line-height: 1;
+    display: block;
+    margin-bottom: 6px;
+  }
+  .brand-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 52px;
+    color: #c41e3a;
+    letter-spacing: 3px;
+    line-height: 0.95;
+    text-shadow: 3px 3px 0 rgba(196,30,58,0.12);
+    display: block;
+  }
+  .brand-sub {
+    font-size: 11px;
+    letter-spacing: 5px;
+    color: #9a6a50;
+    text-transform: uppercase;
+    margin-top: 6px;
+    display: block;
+  }
+
+  /* ── FOTO ── */
+  .photo-section {
+    margin: 20px 26px 0;
+    position: relative;
+    /* Proporción 4:3 para que la foto se vea bien */
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    border: 2px solid rgba(196,30,58,0.35);
+    flex-shrink: 0;
+  }
+  .photo-bg-text {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 110px;
+    color: rgba(196,30,58,0.06);
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+    letter-spacing: -4px;
+    z-index: 0;
+  }
+  .food-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 30%;
+    display: block;
+    filter: brightness(1.06) saturate(1.22) contrast(1.04);
+    z-index: 1;
+  }
+  /* Degradado inferior sobre la foto */
+  .photo-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, transparent 45%, rgba(15,5,0,0.7) 100%);
+    z-index: 2;
+  }
+  /* Esquinas decorativas */
+  .photo-corner {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border-color: #c41e3a;
+    border-style: solid;
+    z-index: 4;
+  }
+  .photo-corner.tl { top: 8px; left: 8px; border-width: 2px 0 0 2px; }
+  .photo-corner.tr { top: 8px; right: 8px; border-width: 2px 2px 0 0; }
+  .photo-corner.bl { bottom: 8px; left: 8px; border-width: 0 0 2px 2px; }
+  .photo-corner.br { bottom: 8px; right: 8px; border-width: 0 2px 2px 0; }
+  /* Badge HOY */
+  .photo-badge {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: #c41e3a;
+    color: #fff;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 13px;
+    letter-spacing: 3px;
+    padding: 5px 12px;
+    z-index: 4;
+  }
+  /* Marca de agua logo */
+  .watermark {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 4;
+    background: rgba(20,8,0,0.45);
+    border-radius: 999px;
+    border: 1px solid rgba(255,255,255,0.18);
+    padding: 5px 14px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .watermark img {
+    width: 42px;
+    height: 42px;
+    object-fit: contain;
+    border-radius: 5px;
+    opacity: 0.85;
+  }
+
+  /* ── NOMBRE PROMO ── */
+  .promo-name {
+    padding: 18px 26px 10px;
+    text-align: center;
+    flex-shrink: 0;
+  }
+  .promo-label {
+    font-size: 11px;
+    letter-spacing: 5px;
+    color: #9a6a50;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+    display: block;
+  }
+  .promo-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 64px;
+    color: #1c0a00;
+    letter-spacing: 3px;
+    line-height: 0.88;
+  }
+  .promo-title span { color: #c41e3a; }
+
+  /* ── INGREDIENTES ── */
+  .ingredients {
+    margin: 10px 26px 18px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .ing-tag {
+    background: rgba(196,30,58,0.07);
+    border: 1px solid rgba(196,30,58,0.22);
+    color: #6b3a2a;
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 5px 10px;
+  }
+
+  /* ── PRECIO ── */
+  .price-block {
+    margin: 0 26px 18px;
+    background: #c41e3a;
+    padding: 16px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    clip-path: polygon(0 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%);
+    flex-shrink: 0;
+  }
+  .price-left-label {
+    font-size: 10px;
+    letter-spacing: 4px;
+    color: rgba(255,255,255,0.7);
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 2px;
+  }
+  .price-currency {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 24px;
+    color: rgba(255,255,255,0.85);
+    vertical-align: top;
+    margin-top: 8px;
+    display: inline-block;
+  }
+  .price-amount {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 60px;
+    color: #fff;
+    line-height: 1;
+    letter-spacing: 2px;
+  }
+  .price-right {
+    text-align: right;
+    color: rgba(255,255,255,0.85);
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    line-height: 1.7;
+  }
+  .price-right strong {
+    display: block;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    color: #fff;
+    letter-spacing: 3px;
+  }
+
+  /* ── HORARIO ── */
+  .horario {
+    margin: 0 26px 0;
+    background: #1c0a00;
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-shrink: 0;
+  }
+  .horario-label {
+    font-size: 9px;
+    letter-spacing: 4px;
+    color: rgba(255,255,255,0.35);
+    text-transform: uppercase;
+    margin-bottom: 3px;
+  }
+  .horario-time {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 30px;
+    color: #fff;
+    letter-spacing: 3px;
+  }
+  .horario-time em { color: #c41e3a; font-style: normal; }
+  .limited-badge {
+    display: inline-block;
+    background: #c41e3a;
+    color: #fff;
+    font-size: 10px;
+    letter-spacing: 2px;
+    padding: 4px 10px;
+    text-transform: uppercase;
+    margin-top: 4px;
+  }
+
+  /* ── FOOTER ── */
+  .footer {
+    padding: 12px 24px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 1px solid rgba(196,30,58,0.15);
+    margin-top: auto;
+    flex-shrink: 0;
+  }
+  .footer-brand {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 13px;
+    color: #9a6a50;
+    letter-spacing: 2px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .footer-logo {
+    width: 30px;
+    height: 30px;
+    object-fit: cover;
+    border-radius: 5px;
+    border: 1px solid rgba(196,30,58,0.3);
+  }
+  .footer-wa {
+    font-size: 12px;
+    color: #6b3a2a;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .wa-dot {
+    width: 8px;
+    height: 8px;
+    background: #25d366;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+</style>
+</head>
+<body>
+<div class="flyer">
+  <div class="c">
+
+    <!-- TOP BAR -->
+    <div class="top-bar">
+      <img class="top-bar-logo" src="images/burrito-al-fuego.png" alt="Logo">
+      <span class="top-bar-txt">HECHO A LA ORDEN</span>
+      <span class="top-bar-emoji">🌯🔥</span>
+    </div>
+
+    <!-- HEADER / MARCA -->
+    <div class="header">
+      <span class="brand-name">BURRITO AL FUEGO</span>
+      <span class="brand-sub">Los Guido · San Miguel </span>
+    </div>
+
+    <!-- FOTO DEL PRODUCTO -->
+    <div class="photo-section">
+      <div class="photo-bg-text">POLLO</div>
+      <!-- Cambiá src por la ruta de tu foto -->
+      <img class="food-img" src="images/pollo-00.jpg" alt="Burrito de pollo">
+      <div class="photo-overlay"></div>
+      <div class="photo-corner tl"></div>
+      <div class="photo-corner tr"></div>
+      <div class="photo-corner bl"></div>
+      <div class="photo-corner br"></div>
+      <div class="photo-badge">HOY</div>
+      <div class="watermark" aria-hidden="true">
+        <img src="images/burrito-al-fuego.png" alt="">
+      </div>
+    </div>
+
+    <!-- NOMBRE DE LA PROMO -->
+    <div class="promo-name">
+      <span class="promo-label">Promo del día</span>
+      <div class="promo-title">BURRITO<br><span style="font-size: 48px;">DE POLLO 🍗</span></div>
+    </div>
+
+    <!-- INGREDIENTES -->
+    <div class="ingredients">
+      <div class="ing-tag">🫓 Tortilla de trigo</div>
+      <div class="ing-tag">🍗 Pollo a la plancha</div>
+      <div class="ing-tag">🌿🍯 Mostaza miel</div>
+      <div class="ing-tag">🧅 Cebolla caramelizada</div>
+      <div class="ing-tag">🌶️ Chile dulce caramelizado</div>
+      <div class="ing-tag">🍅 Tomate · Lechuga</div>
+    </div>
+
+    <!-- PRECIO -->
+    <div class="price-block">
+      <div>
+        <span class="price-left-label">solo por</span>
+        <div>
+          <span class="price-currency">₡</span>
+          <span class="price-amount">1.500</span>
+        </div>
+      </div>
+      <div class="price-right">
+        <strong>200g</strong>
+        de puro<br>sabor
+      </div>
+    </div>
+
+    <!-- HORARIO -->
+    <div class="horario">
+      <div>
+        <div class="horario-label">Horario de la promo</div>
+        <div class="horario-time">4<em>PM</em> — 8<em>PM</em></div>
+      </div>
+      <div style="text-align:right;">
+        <div style="color:rgba(255,255,255,0.35);font-size:9px;letter-spacing:2px;text-transform:uppercase;">disponibilidad</div>
+        <div class="limited-badge">⚡ Limitado</div>
+      </div>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="footer">
+      <span class="footer-brand">
+        <img class="footer-logo" src="images/burrito-al-fuego.png" alt="logo">
+        BURRITO AL FUEGO
+      </span>
+      <span class="footer-wa">
+        <span class="wa-dot"></span>
+        +506 6271-2940
+      </span>
+    </div>
+
+  </div>
+</div>
+</body>
+</html>
